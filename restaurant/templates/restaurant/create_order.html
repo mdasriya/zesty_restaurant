@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Place Order</title>
+</head>
+<body>
+    <h1>Place Order</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        <label for="customer_name">Customer Name:</label>
+        <input type="text" name="customer_name"><br>
+        <label for="dishes">Select Dishes:</label>
+        <select multiple name="dishes">
+            {% for dish in dishes %}
+            <option value="{{ dish.dish_name }}">{{ dish.dish_name }}</option>
+            {% endfor %}
+        </select><br>
+        <input type="submit" value="Place Order">
+    </form>
+</body>
+</html>

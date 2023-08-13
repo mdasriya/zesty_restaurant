@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Zesty Zomato Menu</title>
+    <style>
+        body {
+            /* border: 1px solid red; */
+            width: 100%;
+          
+            margin: auto;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .div{
+  /* border: 1px solid blue; */
+  width: 80%;
+  margin: auto;
+  padding: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .availability {
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .available {
+            background-color: #b9e6b9;
+            color: #006600;
+        }
+
+        .not-available {
+            background-color: #f2b6b6;
+            color: #cc0000;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        select,
+        input[type="text"],
+        input[type="submit"] {
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="div">
+
+  
+    <h1>Menu</h1>
+
+    <ul>
+        {% for dish in dishes %}
+        <li>
+            <span>{{ dish.dish_name }} - ${{ dish.price }}</span>
+            <span class="availability {% if dish.availability %}available{% else %}not-available{% endif %}">
+                {% if dish.availability %}Available{% else %}Not Available{% endif %}
+            </span>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Add New Dish</h2>
+    <form method="post" action="{% url 'add_dish' %}">
+        {% csrf_token %}
+        <label for="dish_name">Dish Name:</label>
+        <input type="text" name="dish_name"><br>
+        <label for="price">Price:</label>
+        <input type="number" name="price"><br>
+        <label for="availability">Availability:</label>
+        <input type="checkbox" name="availability"><br>
+        <input type="submit" value="Add Dish">
+    </form>
+
+    <h2>Add New Order</h2>
+    <form method="post" action="{% url 'create_order' %}">
+        {% csrf_token %}
+        <label for="customer_name">Customer Name:</label>
+        <input type="text" name="customer_name"><br>
+        <label for="dishes">Select Dishes:</label>
+        <select multiple name="dishes">
+            {% for dish in dishes %}
+            <option value="{{ dish.dish_name }}">{{ dish.dish_name }}</option>
+            {% endfor %}
+        </select><br>
+        <input type="submit" value="Place Order">
+    </form>
+    
+    <h2>Manage Orders</h2>
+    <ul>
+        {% for order in orders %}
+        <li>
+            Customer: {{ order.customer_name }}
+            <br>
+            Dishes: {{ order.dishes|join:", " }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+
+</html>

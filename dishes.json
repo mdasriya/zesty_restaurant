@@ -1,0 +1,22 @@
+[
+    {
+        "dish_name": "Pizza",
+        "price": 12.99,
+        "availability": true
+    },
+    {
+        "dish_name": "Burger",
+        "price": 8.99,
+        "availability": false
+    },
+    {
+        "dish_name": "Pasta",
+        "price": 10.99,
+        "availability": true
+    },
+    {
+        "dish_name": "chicken",
+        "price": 200.0,
+        "availability": false
+    }
+]
